@@ -1,0 +1,30 @@
+{
+  "name": "big-o-calculator",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "source": "src/index.ts",
+  "author": "Andrzej Wamicz <andrzej.wamicz@coderbyte.com>",
+  "license": "MIT",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "prepublish": "yarn build",
+    "build": "tsc",
+    "test": "mocha -r ts-node/register \"test/**/*.test.ts\""
+  },
+  "dependencies": {
+    "tslib": "^2.2.0"
+  },
+  "optionalDependencies": {
+    "axios": "^0.21.1"
+  },
+  "devDependencies": {
+    "@types/node": "^15.0.1",
+    "@types/mocha": "^8.2.2",
+    "mocha": "^8.3.2",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
+  }
+}
