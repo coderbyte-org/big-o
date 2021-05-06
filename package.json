@@ -26,5 +26,9 @@
     "mocha": "^8.3.2",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coderbyte-org/big-o.git"
   }
 }
