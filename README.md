@@ -25,7 +25,7 @@ This powers the [BigO calculations done on Coderbyte](https://coderbyte.com/prof
 - [Case study](#case-study)
 
 ## Architecture
-This library consists of three essential parts linked together and run by [AnalysisService](src/AnalysisService.ts):
+This library consists of three essential parts linked together and run by [AnalysisService](src/AnalysisService.ts#L22):
 - [Creator](#creator) - performs a series of operations to create a runnable sample from the [Code](src/structures/Code.ts) you pass to the library in order:
   - generates function arguments for each N
   - creates runnable test sample with injected arguments
@@ -122,7 +122,7 @@ in [Extending Calculator Functionality](#extending-calculator-functionality) sec
 ### Insight
 This section describes how the transformation from [Code](src/structures/Code.ts) 
 to [BigO](src/structures/BigO.ts) is done in the calculator.
-[AnalysisService](src/AnalysisService.ts) logic is following:
+[AnalysisService](src/AnalysisService.ts#L22) logic is following:
 ```
 (Code) -> [Creator] -> [Runner] -> [Calculator] -> (BigO)
                           ^              |
@@ -132,7 +132,7 @@ to [BigO](src/structures/BigO.ts) is done in the calculator.
 1. Determine sample sizes `N[]` essential to calculate time complexity. 
    Defaults are  `[16, 32, 128, 256, 512, 1024, 2048, 4096]`
 2. For each `N` generate the samples based on `testedFunctionName`.
-   [Built-in argument types](src/creator/generator/ArgumentGenerator.ts) can be used.
+   [Built-in argument types](src/creator/generator/ArgumentGenerator.ts#L10) can be used.
    Examples of arguments generated for sample size 16:  
    - `BuiltInArgumentTypes.WORDS`: 
      ```json
@@ -192,7 +192,7 @@ By default [GenericCalculator](src/calculator/GenericCalculator.ts) is used.
 It is designed to determine the `BigO` based on as few run time durations as possible.
 It compares durations with each other to see at which `N` times start to grow and by how much.
 Based on this information it is returning the `BigO`. If Calculator is unable to determine the BigO for given 
-test result set [AnalysisService](src/AnalysisService.ts) runs more samples at the Runner. 
+test result set [AnalysisService](src/AnalysisService.ts#L22) runs more samples at the Runner. 
 If there is no more samples to run and Calculator is still not sure about the `BigO`, 
 optimal complexity is returned (`BigO.LINEAR`). 
 
@@ -315,7 +315,7 @@ calculator.analyze(code);
 ```
 #### Custom generator function
 Anything can be generated and injected into the tested function as an argument. `AnalysisService.addCustomGenerator()` method allows 
-you to add a custom [ArgumentGeneratingFunction](src/creator/generator/ArgumentGenerator.ts) for specific functions.  
+you to add a custom [ArgumentGeneratingFunction](src/creator/generator/ArgumentGenerator.ts#L19) for specific functions.  
 ```typescript
 const calculator = new AnalysisService(codeRunner);
 calcualtor.addCustomGenerator('customObjectTransformingFunction', n => {
@@ -365,7 +365,7 @@ calculator.analyze(code);
 ```
 ### Custom code transformers
 Code sent to Runner can be transformed by calling `AnalysisService.addLanguageCodeTransformer()` method 
-with [CodeTransformerFunction](src/creator/transformer/CodeTransformer.ts) as a parameter.
+with [CodeTransformerFunction](src/creator/transformer/CodeTransformer.ts#L4) as a parameter.
 
 ```typescript
 const calculator = new AnalysisService(codeRunner);
