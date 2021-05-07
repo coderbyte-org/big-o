@@ -1,7 +1,7 @@
-import {AnalysisError} from "./AnalysisError";
+import {AnalysisError} from './AnalysisError';
 
 class CodeRunnerError extends AnalysisError {
-    failedSample: number = 0;
+    failedSample = 0;
     codeRunnerResponse: { [key: string]: string } = {};
 }
 

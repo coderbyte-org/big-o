@@ -1,6 +1,6 @@
-import {ArgumentGeneratingFunction, ArgumentGenerator, SampleSize} from "./generator";
-import {AlgorithmSpeed, AnalysisTestSet, Code, Language, TestSample} from "../structures";
-import {CodeTransformer, CodeTransformerFunction} from "./transformer";
+import {ArgumentGeneratingFunction, ArgumentGenerator, SampleSize} from './generator';
+import {AlgorithmSpeed, AnalysisTestSet, Code, Language, TestSample} from '../structures';
+import {CodeTransformer, CodeTransformerFunction} from './transformer';
 
 type SamplesBySpeed = Map<AlgorithmSpeed, number[]>;
 
@@ -37,15 +37,15 @@ class TestSetCreator {
     addSpeedLanguageSet(language: Language, speed: AlgorithmSpeed, sampleSizes: number[]): void
     {
         if (!this.languageSampleSizesBySpeed.has(language)) {
-            this.languageSampleSizesBySpeed.set(language, new Map<AlgorithmSpeed, number[]>())
+            this.languageSampleSizesBySpeed.set(language, new Map<AlgorithmSpeed, number[]>());
         }
         this.languageSampleSizesBySpeed.get(language)!.set(speed, sampleSizes);
     }
 
     create(code: Code): AnalysisTestSet
     {
-        let ns: number[] = this.sampleSizes(code.language, code.expectedSpeed);
-        let testSamples: TestSample[] = this.argumentGenerator.generateSet(ns, code.testedFunctionName);
+        const ns: number[] = this.sampleSizes(code.language, code.expectedSpeed);
+        const testSamples: TestSample[] = this.argumentGenerator.generateSet(ns, code.testedFunctionName);
         return {
             code,
             samples: this.codeTransformer.injectFunctionArguments(code, testSamples),

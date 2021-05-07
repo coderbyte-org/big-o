@@ -1,5 +1,5 @@
-import {Language} from "./Language";
-import {AlgorithmSpeed} from "./AlgorithmSpeed";
+import {Language} from './Language';
+import {AlgorithmSpeed} from './AlgorithmSpeed';
 
 type Code = {
     language: Language,

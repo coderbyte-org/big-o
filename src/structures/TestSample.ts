@@ -1,4 +1,4 @@
-import {FunctionArgument} from "./FunctionArgument";
+import {FunctionArgument} from './FunctionArgument';
 
 type TestSample = {
     n: number,

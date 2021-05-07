@@ -1,5 +1,5 @@
-import {Code, Language, RunnableCode, TestSample} from "../../structures";
-import {convertArray, convertString} from "./ArgumentConverters";
+import {Code, Language, RunnableCode, TestSample} from '../../structures';
+import {convertArray, convertString} from './ArgumentConverters';
 
 type CodeTransformerFunction = (code: Code, sample: TestSample) => string;
 
@@ -17,7 +17,7 @@ class CodeTransformer {
 
     private createRunnableCode(code: Code, sample: TestSample): string {
         let codeContent: string = this.applyLanguageSpecialRules(code, sample);
-        let syntaxArguments: string = this.argumentsInLanguageSyntax(code, sample);
+        const syntaxArguments: string = this.argumentsInLanguageSyntax(code, sample);
         let patterns: Array<string|RegExp> = [CodeTransformer.REPLACEMENT_PATTERN];
         if (this.languagePatterns.has(code.language)) {
             patterns = this.languagePatterns.get(code.language)!;
@@ -31,7 +31,7 @@ class CodeTransformer {
     private applyLanguageSpecialRules(code: Code, sample: TestSample): string
     {
         if (this.languageTransformers.has(code.language)) {
-            let transformer: CodeTransformerFunction = this.languageTransformers.get(code.language)!;
+            const transformer: CodeTransformerFunction = this.languageTransformers.get(code.language)!;
             return transformer(code, sample);
         }
         return code.content;
@@ -39,12 +39,12 @@ class CodeTransformer {
 
     private argumentsInLanguageSyntax(code: Code, sample: TestSample): string {
         switch (true) {
-            case Array.isArray(sample.value):
-                return convertArray(sample.value as Array<any>, code.language);
-            case typeof sample.value === 'string':
-                return convertString(sample.value as string, code.language);
-            default:
-                return sample.value.toString();
+        case Array.isArray(sample.value):
+            return convertArray(sample.value as Array<any>, code.language);
+        case typeof sample.value === 'string':
+            return convertString(sample.value as string, code.language);
+        default:
+            return sample.value.toString();
         }
     }
 

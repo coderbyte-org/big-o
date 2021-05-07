@@ -1,5 +1,5 @@
-import {Code} from "./Code";
-import {RunnableCode} from "./RunnableCode";
+import {Code} from './Code';
+import {RunnableCode} from './RunnableCode';
 
 type AnalysisTestSet = {
     code: Code,

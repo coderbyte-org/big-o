@@ -1,4 +1,4 @@
-import {AnalysisError} from "./AnalysisError";
+import {AnalysisError} from './AnalysisError';
 
 class UnexpectedTimeoutError extends AnalysisError {
 

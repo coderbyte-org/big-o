@@ -4,16 +4,16 @@ import {
     generateNumberArray,
     generateString,
     generateStringArray
-} from "./GenericGenerators";
-import {FunctionArgument, TestSample} from "../../structures";
+} from './GenericGenerators';
+import {FunctionArgument, TestSample} from '../../structures';
 
 abstract class BuiltInArgumentTypes {
-    static WORDS: string = 'words'
-    static ALPHA_STRING: string = 'string';
-    static NUMBER_STRING: string = 'numberString';
-    static NUMBER: string = 'number';
-    static RANDOM_NUMBERS: string = 'numberArr';
-    static ORDERED_NUMBERS: string = 'consecutiveNumberArr';
+    static WORDS = 'words'
+    static ALPHA_STRING = 'string';
+    static NUMBER_STRING = 'numberString';
+    static NUMBER = 'number';
+    static RANDOM_NUMBERS = 'numberArr';
+    static ORDERED_NUMBERS = 'consecutiveNumberArr';
 }
 
 type ArgumentGeneratingFunction = (n: number) => FunctionArgument;
@@ -36,7 +36,7 @@ class ArgumentGenerator {
 
     generateSet(ns: number[], testedFunctionName: string): TestSample[]
     {
-        return ns.map(n => this.generate(n, testedFunctionName))
+        return ns.map(n => this.generate(n, testedFunctionName));
     }
 
     generate(n: number, testedFunctionName: string): TestSample
@@ -44,11 +44,11 @@ class ArgumentGenerator {
         if (!this.isArgumentTypeSupported(testedFunctionName)) {
             throw new Error(`No generator for ${testedFunctionName}!`);
         }
-        let generator: ArgumentGeneratingFunction = this.generators[testedFunctionName];
+        const generator: ArgumentGeneratingFunction = this.generators[testedFunctionName];
         return {
             n,
             value: generator(n)
-        }
+        };
     }
 
     useBuiltInGenerator(testedFunctionName: string, builtInGeneratorName: string): void

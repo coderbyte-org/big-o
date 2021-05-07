@@ -1,4 +1,4 @@
-import {Code, RunTime} from "../structures";
+import {Code, RunTime} from '../structures';
 
 class AnalysisError extends Error {
     testResults: RunTime[] = [];

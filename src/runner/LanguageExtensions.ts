@@ -1,4 +1,4 @@
-import {Language} from "../structures";
+import {Language} from '../structures';
 
 const LanguageExtensions: { [key: string]: string } = {
     [Language.JS]: 'js',

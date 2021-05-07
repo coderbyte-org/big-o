@@ -1,8 +1,8 @@
-import {CodeRunner} from "./CodeRunner";
-import {HttpClient} from "./HttpClient";
-import {Language} from "../structures";
-import {CodeRunnerError} from "./CodeRunnerError";
-import {LanguageExtensions} from "./LanguageExtensions";
+import {CodeRunner} from './CodeRunner';
+import {HttpClient} from './HttpClient';
+import {Language} from '../structures';
+import {CodeRunnerError} from './CodeRunnerError';
+import {LanguageExtensions} from './LanguageExtensions';
 
 const TIMEOUT_ERROR_MESSAGE = 'process killed as timeout reached';
 
@@ -33,14 +33,14 @@ class CBHttpCodeRunner implements CodeRunner {
         return this.client.post(uri, body)
             .then((data: any) => {
                 if (data.stderr !== '' || (data.error !== '' && data.error !== TIMEOUT_ERROR_MESSAGE)) {
-                    let err = new CodeRunnerError('Failed at coderunner')
+                    const err = new CodeRunnerError('Failed at coderunner');
                     err.codeRunnerResponse = data;
                     return Promise.reject(err);
                 }
                 if (this.languageResponseHandlers.has(language)) {
                     try {
-                        let handler: ResponseHandler = this.languageResponseHandlers.get(language)!;
-                        let duration: number = handler(data.stdout);
+                        const handler: ResponseHandler = this.languageResponseHandlers.get(language)!;
+                        const duration: number = handler(data.stdout);
                         return Promise.resolve(duration);
                     } catch (err) {
                         return Promise.reject(err);
@@ -52,7 +52,7 @@ class CBHttpCodeRunner implements CodeRunner {
 
     private determineRunnerUri(language: Language): string {
         if (!this.languageUris.hasOwnProperty(language)) {
-            this.languageUris[language] = this.uriPattern.replace(CBHttpCodeRunner.URI_PATTERN_LANG_PART, language)
+            this.languageUris[language] = this.uriPattern.replace(CBHttpCodeRunner.URI_PATTERN_LANG_PART, language);
         }
         return this.languageUris[language];
     }
@@ -67,13 +67,13 @@ class CBHttpCodeRunner implements CodeRunner {
             filename = 'Main';
         }
         const sample: { [key: string]: any } = {
-          language,
-          files: [
-              {
-                  name: filename + '.' + LanguageExtensions[language],
-                  content: code
-              }
-          ]
+            language,
+            files: [
+                {
+                    name: filename + '.' + LanguageExtensions[language],
+                    content: code
+                }
+            ]
         };
         Object.keys(context).forEach((key: string) => {
             sample[key] = context[key];
@@ -83,6 +83,6 @@ class CBHttpCodeRunner implements CodeRunner {
 }
 
 export {
-  CBHttpCodeRunner,
-  ResponseHandler
+    CBHttpCodeRunner,
+    ResponseHandler
 };

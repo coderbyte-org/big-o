@@ -1,4 +1,4 @@
-import {AlgorithmSpeed, BigO, RunTime} from "../structures";
+import {AlgorithmSpeed, BigO, RunTime} from '../structures';
 
 
 interface Calculator {

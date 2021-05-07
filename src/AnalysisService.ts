@@ -1,15 +1,16 @@
-import {CodeRunner, CodeRunnerError} from "./runner";
-import {AlgorithmSpeed, Code, RunTime} from "./structures";
-import {BigO} from "./structures";
-import {AnalysisTestSet} from "./structures";
-import {TestSetCreator} from "./creator";
-import {Calculator} from "./calculator";
-import {GenericCalculator, TIMEOUT_THRESHOLD_MS} from "./calculator";
-import {Language} from "./structures";
-import {UnexpectedTimeoutError} from "./runner";
-import {RunnableCode, AnalysisResult} from "./structures";
-import {ArgumentGeneratingFunction} from "./creator/generator";
-import {CodeTransformerFunction} from "./creator/transformer";
+import {CodeRunner, CodeRunnerError, UnexpectedTimeoutError} from './runner';
+import {
+    AlgorithmSpeed,
+    AnalysisResult,
+    AnalysisTestSet,
+    BigO,
+    Code,
+    Language,
+    RunnableCode,
+    RunTime
+} from './structures';
+import {ArgumentGeneratingFunction, CodeTransformerFunction, TestSetCreator} from './creator';
+import {Calculator, GenericCalculator, TIMEOUT_THRESHOLD_MS} from './calculator';
 
 export type AnalysisServiceConfig = {
     optimalComplexities?: Map<string, BigO>,
@@ -51,9 +52,9 @@ class AnalysisService {
     }
 
     public analyze(code: Code, runnerContext: { [key: string]: any } = {}): Promise<AnalysisResult> {
-        let testSet: AnalysisTestSet = this.testSetCreator.create(code);
-        let testResultsObj: { r: RunTime[] } = {r: []};
-        let calculator: Calculator = this.calculatorForLanguage(code.language);
+        const testSet: AnalysisTestSet = this.testSetCreator.create(code);
+        const testResultsObj: { r: RunTime[] } = {r: []};
+        const calculator: Calculator = this.calculatorForLanguage(code.language);
         return this.recursiveAnalyze(calculator, testSet, testResultsObj, 0, runnerContext);
     }
 
@@ -61,17 +62,17 @@ class AnalysisService {
         calculator: Calculator,
         testSet: AnalysisTestSet,
         testResultsObj: { r: RunTime[] },
-        i: number = 0,
+        i = 0,
         runnerContext: { [key: string]: any } = {}
     ): Promise<AnalysisResult> {
         return this.runSample(testSet.code, testSet.samples[i], testResultsObj, runnerContext)
             .then((testResults: RunTime[]) => {
-                let bigO: BigO = calculator.calculate(testResults, testSet.code.expectedSpeed);
+                const bigO: BigO = calculator.calculate(testResults, testSet.code.expectedSpeed);
                 if (bigO !== BigO.UNKNOWN) {
                     return Promise.resolve({bigO, testResults});
                 }
                 if (testResults[testResults.length-1].result >= TIMEOUT_THRESHOLD_MS) {
-                    let err = new UnexpectedTimeoutError('Calculator could not handle runner timeout.')
+                    const err = new UnexpectedTimeoutError('Calculator could not handle runner timeout.');
                     err.testResults = testResults;
                     err.code = testSet.code;
                     return Promise.reject(err);
@@ -93,10 +94,10 @@ class AnalysisService {
         runnerContext: { [key: string]: any } = {}
     ): Promise<RunTime[]> {
         let runs: number = this.runCountForSample(code.language, sample.n);
-        let promises: Promise<RunTime>[] = [];
+        const promises: Promise<RunTime>[] = [];
         while (runs > 0) {
             runs--;
-            let durationRunner: Promise<RunTime> = this.codeRunner.checkCodeExecDuration(code.language, sample.code, runnerContext)
+            const durationRunner: Promise<RunTime> = this.codeRunner.checkCodeExecDuration(code.language, sample.code, runnerContext)
                 .then((duration: number) => {
                     return Promise.resolve({
                         result: duration,
@@ -151,7 +152,7 @@ class AnalysisService {
 
     private runCountForSample(language: Language, sampleSize: number): number {
         if (this.repeatedSamples.has(language)) {
-            let samples: number[] = this.repeatedSamples.get(language);
+            const samples: number[] = this.repeatedSamples.get(language);
             if (samples.indexOf(sampleSize) !== -1) {
                 return 3;
             }

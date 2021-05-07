@@ -1,5 +1,5 @@
-import {BigO} from "./BigO";
-import {RunTime} from "./RunTime";
+import {BigO} from './BigO';
+import {RunTime} from './RunTime';
 
 type AnalysisResult = {
     bigO: BigO,
