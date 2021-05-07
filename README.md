@@ -1,7 +1,9 @@
 # BigO Calculator
-BigO Calculator library allows calculating the time complexity of a given algorithm. 
-Calculation is performed by generating a series of test cases with increasing argument size (N), 
+This BigO Calculator library allows you to calculate the time complexity of a given algorithm. 
+Calculation is performed by generating a series of test cases with increasing argument size, 
 then measuring each test case run time, and determining the probable time complexity based on the gathered durations.  
+
+This powers the [BigO calculations done on Coderbyte](https://coderbyte.com/profile/mennamohsensaad).
 
 ## Table of contents
 - [Architecture](#architecture)
@@ -45,10 +47,8 @@ npm i big-o-calculator
 ##### Default code runner
 BigO Calculator includes [CBHttpCodeRunner](src/runner/CBHttpCodeRunner.ts), 
 which is a client for [cb-code-runner](https://github.com/coderbyte-org/cb-code-runner) 
-along with [AxiosClient](src/runner/AxiosClient.ts) as a HTTP client.
-
-If you choose to use those classes as a [Runner](#runner) part of the calculator 
-you need to install optional [axios](https://github.com/axios/axios) dependency.
+along with [AxiosClient](src/runner/AxiosClient.ts) as an HTTP client. If you choose to use those classes as a [Runner](#runner) part of the calculator 
+you need to install the optional [axios](https://github.com/axios/axios) dependency.
 
 using yarn:
 ```shell
@@ -63,6 +63,7 @@ npm i axios
 ## Initialization
 ```typescript
 import {AxiosClient, CBHttpCodeRunner, AnalysisService} from "big-o-calculator";
+
 // First occurrence of [runnerLanguage] in URI will be replaced with language
 const codeRunnerUri = 'http://example.com/code-runner/[runnerLanguage]';
 const codeRunner = new CBHttpCodeRunner(codeRunnerUri, new AxiosClient())
@@ -70,7 +71,7 @@ const calculator = new AnalysisService(codeRunner);
 ```
 
 ## Analysis
-Assume you want to determine the BigO for the following javascript code:
+Assume you want to determine the BigO for the following JavaScript code:
 ```javascript
 function firstLetters(words) {
   return words.split(' ').map(word => {
@@ -78,8 +79,8 @@ function firstLetters(words) {
   });
 }
 ```
-BigO Calculator needs a way to inject arguments in tested code, 
-so function call and `{funcArgs}`argument placeholder needs to be added.
+BigO Calculator needs a way to inject arguments into the tested code, 
+so a function call and `{funcArgs}` argument placeholder needs to be added.
 ```javascript
 firstLetters({funcArgs});
 ```
@@ -97,6 +98,7 @@ Then create a [Code](src/structures/Code.ts) object.
 
 ```typescript
 import {AlgorithmSpeed, BuiltInArgumentTypes, Language} from "big-o-calculator";
+
 let code: Code = {
   // Language of the tested code
   language: Language.JS,
@@ -108,6 +110,7 @@ let code: Code = {
   // Type of arguments to generate for tested code
   testedFunctionName: BuiltInArgumentTypes.WORDS
 };
+
 // AnalysisService.analyze returns a promisified BigO value
 calculator.analyze(code)
   .then(analysisResult => {
@@ -127,10 +130,10 @@ to [BigO](src/structures/BigO.ts) is done in the calculator.
 ```
 ##### Creator
 1. Determine sample sizes `N[]` essential to calculate time complexity. 
-   Defaults are `[16, 32, 128, 256, 512, 1024, 2048, 4096]`
+   Defaults are  `[16, 32, 128, 256, 512, 1024, 2048, 4096]`
 2. For each `N` generate the samples based on `testedFunctionName`.
-   [Built in argument types](src/generator/ArgumentGenerator.ts) can be used.
-   Examples of arguments generated for sample size 16:
+   [Built-in argument types](src/generator/ArgumentGenerator.ts) can be used.
+   Examples of arguments generated for sample size 16:  
    - `BuiltInArgumentTypes.WORDS`: 
      ```json
      "qbrtpygpd xl jmt hhpynvgb cdnsjgofyg fxserr qecaegdcj tfgsleqvis eecuidbg fmx rfqdwldmz rdkrf qsqstb mnkfml qvw rftsinug"
@@ -181,7 +184,7 @@ let created = {
 ```
 ##### Runner
 By default [cb-code-runner](https://github.com/coderbyte-org/cb-code-runner) is used.
-It is able to measure the run time of a tested sample. Samples are passed to runner one by one. 
+It is able to measure the run time of a tested sample. Samples are passed to the runner one by one. 
 When sample measuring is done, duration is passed to Calculator as a test result.
 
 ##### Calculator
@@ -197,15 +200,14 @@ optimal complexity is returned (`BigO.LINEAR`).
 ### AnalysisService config
 ```typescript
 type AnalysisServiceConfig = {
-    optimalComplexities?: Map<string, BigO>,
-    calculators?: Map<Language, Calculator>,
-    repeatedSamples?: Map<Language, number[]>,
-    defaultCalculator?: Calculator,
+  optimalComplexities?: Map<string, BigO>,
+  calculators?: Map<Language, Calculator>,
+  repeatedSamples?: Map<Language, number[]>,
+  defaultCalculator?: Calculator,
 }
 ```
 #### Optimal complexities
-When measuring of the duration for each sample is done, 
-but Calculator is not able to notice any pattern in test results it will return optimal complexity, 
+If the Calculator is not able to notice any pattern in test results, after duration measuring for each sample, it will return the optimal complexity, 
 which by default is equal to `BigO.LINEAR`. 
 `optimalComplexity` config parameter can be used to set different complexity for different tested functions.
 
@@ -221,7 +223,7 @@ const calculator = new AnalysisService(codeRunner, {optimalComplexities});
 #### Calculators
 Since different languages tend to run code in different time, 
 custom calculators can be added for each language by using `calculators` parameter of the config. 
-All new calculators must implement [Calculator](src/calculator/Calculator.ts) interface.
+All new calculators must implement the [Calculator](src/calculator/Calculator.ts) interface.
 
 ```typescript
 class ClojureCalculator extends GenericCalculator {
@@ -290,7 +292,7 @@ calculator.addTestSetCreatorSpeedLanguageSet(
 ### Argument generators
 This library includes some basic generators, which create arguments for tested functions.
 Some functions might need custom arguments and this can be achieved in two ways:
-#### Custom function name + built in generator
+#### Custom function name + built-in generator
 Calling `AnalysisService.useBuiltInGenerator()` method allows to set a built-in generator function 
 for any tested function you want to run. Following example shows the possible use case:
 ```typescript
@@ -299,6 +301,7 @@ const config: AnalysisServiceConfig = {
     ['fancySortingAlgorithm', BigO.LOGLINEAR]
   ])
 }
+
 const calculator = new AnalysisService(codeRunner, config);
 calcualtor.useBuiltInGenerator('fancySortingAlgorithm', BuiltInArgumentTypes.RANDOM_NUMBERS);
 
@@ -311,8 +314,8 @@ const code: Code = {
 calculator.analyze(code);
 ```
 #### Custom generator function
-Anything can be generated and injected into tested function as an argument. `AnalysisService.addCustomGenerator()` method allows 
-to add a custom [ArgumentGeneratingFunction](src/generator/ArgumentGenerator.ts) for specific functions.  
+Anything can be generated and injected into the tested function as an argument. `AnalysisService.addCustomGenerator()` method allows 
+you to add a custom [ArgumentGeneratingFunction](src/generator/ArgumentGenerator.ts) for specific functions.  
 ```typescript
 const calculator = new AnalysisService(codeRunner);
 calcualtor.addCustomGenerator('customObjectTransformingFunction', n => {
