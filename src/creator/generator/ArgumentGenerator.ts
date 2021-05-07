@@ -5,7 +5,7 @@ import {
     generateString,
     generateStringArray
 } from "./GenericGenerators";
-import {FunctionArgument, TestSample} from "../structures";
+import {FunctionArgument, TestSample} from "../../structures";
 
 abstract class BuiltInArgumentTypes {
     static WORDS: string = 'words'

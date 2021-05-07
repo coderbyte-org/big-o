@@ -1,4 +1,4 @@
-import {Code, Language, RunnableCode, TestSample} from "../structures";
+import {Code, Language, RunnableCode, TestSample} from "../../structures";
 import {convertArray, convertString} from "./ArgumentConverters";
 
 type CodeTransformerFunction = (code: Code, sample: TestSample) => string;

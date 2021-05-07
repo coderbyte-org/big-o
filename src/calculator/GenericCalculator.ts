@@ -1,6 +1,6 @@
 import {Calculator} from "./Calculator";
 import {AlgorithmSpeed, BigO, RunTime} from "../structures";
-import {SampleSize} from "../generator";
+import {SampleSize} from "../creator/generator";
 
 export type NGrouped = { [key: number]: number};
 export const TIMEOUT_THRESHOLD_MS = 20000;

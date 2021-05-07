@@ -8,8 +8,8 @@ import {GenericCalculator, TIMEOUT_THRESHOLD_MS} from "./calculator";
 import {Language} from "./structures";
 import {UnexpectedTimeoutError} from "./runner";
 import {RunnableCode, AnalysisResult} from "./structures";
-import {ArgumentGeneratingFunction} from "./generator";
-import {CodeTransformerFunction} from "./transformer";
+import {ArgumentGeneratingFunction} from "./creator/generator";
+import {CodeTransformerFunction} from "./creator/transformer";
 
 export type AnalysisServiceConfig = {
     optimalComplexities?: Map<string, BigO>,

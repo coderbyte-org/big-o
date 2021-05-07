@@ -132,7 +132,7 @@ to [BigO](src/structures/BigO.ts) is done in the calculator.
 1. Determine sample sizes `N[]` essential to calculate time complexity. 
    Defaults are  `[16, 32, 128, 256, 512, 1024, 2048, 4096]`
 2. For each `N` generate the samples based on `testedFunctionName`.
-   [Built-in argument types](src/generator/ArgumentGenerator.ts) can be used.
+   [Built-in argument types](src/creator/generator/ArgumentGenerator.ts) can be used.
    Examples of arguments generated for sample size 16:  
    - `BuiltInArgumentTypes.WORDS`: 
      ```json
@@ -266,7 +266,7 @@ Our tests show that for some language more sample sizes should be added to deter
 This can be done by calling `AnalysisService.addTestSetCreatorDefaultLanguageSet()` as in the example below.
 
 [GenericCalculator](src/calculator/GenericCalculator.ts) will only handle sample sizes 
-defined in [SampleSize](src/generator/SampleSize.ts) class, but any sample sizes can be used for custom calculators. 
+defined in [SampleSize](src/creator/generator/SampleSize.ts) class, but any sample sizes can be used for custom calculators. 
 
 ```typescript
 const calculator = new AnalysisService(codeRunner);
@@ -315,7 +315,7 @@ calculator.analyze(code);
 ```
 #### Custom generator function
 Anything can be generated and injected into the tested function as an argument. `AnalysisService.addCustomGenerator()` method allows 
-you to add a custom [ArgumentGeneratingFunction](src/generator/ArgumentGenerator.ts) for specific functions.  
+you to add a custom [ArgumentGeneratingFunction](src/creator/generator/ArgumentGenerator.ts) for specific functions.  
 ```typescript
 const calculator = new AnalysisService(codeRunner);
 calcualtor.addCustomGenerator('customObjectTransformingFunction', n => {
@@ -365,7 +365,7 @@ calculator.analyze(code);
 ```
 ### Custom code transformers
 Code sent to Runner can be transformed by calling `AnalysisService.addLanguageCodeTransformer()` method 
-with [CodeTransformerFunction](src/transformer/CodeTransformer.ts) as a parameter.
+with [CodeTransformerFunction](src/creator/transformer/CodeTransformer.ts) as a parameter.
 
 ```typescript
 const calculator = new AnalysisService(codeRunner);

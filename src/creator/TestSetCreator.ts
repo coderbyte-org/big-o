@@ -1,6 +1,6 @@
-import {ArgumentGeneratingFunction, ArgumentGenerator, SampleSize} from "../generator";
+import {ArgumentGeneratingFunction, ArgumentGenerator, SampleSize} from "./generator";
 import {AlgorithmSpeed, AnalysisTestSet, Code, Language, TestSample} from "../structures";
-import {CodeTransformer, CodeTransformerFunction} from "../transformer";
+import {CodeTransformer, CodeTransformerFunction} from "./transformer";
 
 type SamplesBySpeed = Map<AlgorithmSpeed, number[]>;
 

@@ -1,4 +1,4 @@
-import {Language} from "../structures";
+import {Language} from "../../structures";
 
 function convertString(argument: string, language: Language): string {
     return '"' + argument + '"';
