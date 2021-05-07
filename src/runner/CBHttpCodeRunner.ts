@@ -27,10 +27,11 @@ class CBHttpCodeRunner implements CodeRunner {
         this.languageResponseHandlers.set(language, handler);
     }
 
-    checkCodeExecDuration(language: Language, code: string, context: { [key: string]: any } = {}): Promise<number> {
+    checkCodeExecDuration(language: Language, code: string, context: { [key: string]: string } = {}): Promise<number> {
         const uri: string = this.determineRunnerUri(language);
         const body: string = this.createCodeSampleBody(language, code, context);
         return this.client.post(uri, body)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             .then((data: any) => {
                 if (data.stderr !== '' || (data.error !== '' && data.error !== TIMEOUT_ERROR_MESSAGE)) {
                     const err = new CodeRunnerError('Failed at coderunner');
@@ -39,7 +40,7 @@ class CBHttpCodeRunner implements CodeRunner {
                 }
                 if (this.languageResponseHandlers.has(language)) {
                     try {
-                        const handler: ResponseHandler = this.languageResponseHandlers.get(language)!;
+                        const handler: ResponseHandler = this.languageResponseHandlers.get(language);
                         const duration: number = handler(data.stdout);
                         return Promise.resolve(duration);
                     } catch (err) {
@@ -57,7 +58,7 @@ class CBHttpCodeRunner implements CodeRunner {
         return this.languageUris[language];
     }
 
-    private createCodeSampleBody(language: Language, code: string, context: { [key: string]: any } = {}): string {
+    private createCodeSampleBody(language: Language, code: string, context: { [key: string]: string } = {}): string {
         if (language === Language.PYTHON3) {
             language = Language.PYTHON;
         }
@@ -66,6 +67,7 @@ class CBHttpCodeRunner implements CodeRunner {
         if (language === Language.JAVA) {
             filename = 'Main';
         }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const sample: { [key: string]: any } = {
             language,
             files: [

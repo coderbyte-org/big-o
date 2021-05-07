@@ -1,5 +1,6 @@
 import {CharacterSet, generateNthLetterIndex} from '../../dist';
 import assert = require('assert');
+import {generateNumberArray} from '../../src';
 
 describe('generateNthLetterIndex', () => {
     CharacterSet.ALPHA.split('').forEach((letter, index) => {
@@ -20,5 +21,20 @@ describe('generateNthLetterIndex', () => {
     });
     it('should return AAA', () => {
         assert.strictEqual(generateNthLetterIndex(53), 'AAA');
+    });
+});
+
+describe('generateNumberArray', () => {
+    it('should generate consecutive numbers', () => {
+        assert.deepStrictEqual(
+            generateNumberArray(3),
+            [1,2,3]
+        );
+    });
+    it('should generate numbers in range', () => {
+        assert.deepStrictEqual(
+            generateNumberArray(5, [0,0]),
+            [0,0,0,0,0]
+        );
     });
 });

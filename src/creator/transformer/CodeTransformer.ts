@@ -20,7 +20,7 @@ class CodeTransformer {
         const syntaxArguments: string = this.argumentsInLanguageSyntax(code, sample);
         let patterns: Array<string|RegExp> = [CodeTransformer.REPLACEMENT_PATTERN];
         if (this.languagePatterns.has(code.language)) {
-            patterns = this.languagePatterns.get(code.language)!;
+            patterns = this.languagePatterns.get(code.language);
         }
         for (let i = 0; i < patterns.length; i++) {
             codeContent = codeContent.replace(patterns[i], syntaxArguments);
@@ -31,7 +31,7 @@ class CodeTransformer {
     private applyLanguageSpecialRules(code: Code, sample: TestSample): string
     {
         if (this.languageTransformers.has(code.language)) {
-            const transformer: CodeTransformerFunction = this.languageTransformers.get(code.language)!;
+            const transformer: CodeTransformerFunction = this.languageTransformers.get(code.language);
             return transformer(code, sample);
         }
         return code.content;
@@ -39,12 +39,12 @@ class CodeTransformer {
 
     private argumentsInLanguageSyntax(code: Code, sample: TestSample): string {
         switch (true) {
-        case Array.isArray(sample.value):
-            return convertArray(sample.value as Array<any>, code.language);
-        case typeof sample.value === 'string':
-            return convertString(sample.value as string, code.language);
-        default:
-            return sample.value.toString();
+            case Array.isArray(sample.value):
+                return convertArray(sample.value as Array<number|string>, code.language);
+            case typeof sample.value === 'string':
+                return convertString(sample.value as string);
+            default:
+                return sample.value.toString();
         }
     }
 
@@ -57,7 +57,7 @@ class CodeTransformer {
         if (!this.languagePatterns.has(language)) {
             this.languagePatterns.set(language, []);
         }
-        this.languagePatterns.get(language)!.push(pattern);
+        this.languagePatterns.get(language)?.push(pattern);
     }
 
     injectFunctionArguments(code: Code, samples: TestSample[]): RunnableCode[]

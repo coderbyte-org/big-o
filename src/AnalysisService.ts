@@ -51,7 +51,7 @@ class AnalysisService {
         this.testSetCreator = new TestSetCreator();
     }
 
-    public analyze(code: Code, runnerContext: { [key: string]: any } = {}): Promise<AnalysisResult> {
+    public analyze(code: Code, runnerContext: { [key: string]: string } = {}): Promise<AnalysisResult> {
         const testSet: AnalysisTestSet = this.testSetCreator.create(code);
         const testResultsObj: { r: RunTime[] } = {r: []};
         const calculator: Calculator = this.calculatorForLanguage(code.language);
@@ -63,7 +63,7 @@ class AnalysisService {
         testSet: AnalysisTestSet,
         testResultsObj: { r: RunTime[] },
         i = 0,
-        runnerContext: { [key: string]: any } = {}
+        runnerContext: { [key: string]: string } = {}
     ): Promise<AnalysisResult> {
         return this.runSample(testSet.code, testSet.samples[i], testResultsObj, runnerContext)
             .then((testResults: RunTime[]) => {
@@ -91,7 +91,7 @@ class AnalysisService {
         code: Code,
         sample: RunnableCode,
         testResultsObj: { r: RunTime[] },
-        runnerContext: { [key: string]: any } = {}
+        runnerContext: { [key: string]: string } = {}
     ): Promise<RunTime[]> {
         let runs: number = this.runCountForSample(code.language, sample.n);
         const promises: Promise<RunTime>[] = [];

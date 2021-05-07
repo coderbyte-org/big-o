@@ -39,7 +39,7 @@ class TestSetCreator {
         if (!this.languageSampleSizesBySpeed.has(language)) {
             this.languageSampleSizesBySpeed.set(language, new Map<AlgorithmSpeed, number[]>());
         }
-        this.languageSampleSizesBySpeed.get(language)!.set(speed, sampleSizes);
+        this.languageSampleSizesBySpeed.get(language)?.set(speed, sampleSizes);
     }
 
     create(code: Code): AnalysisTestSet
@@ -74,12 +74,12 @@ class TestSetCreator {
 
     private sampleSizes(language: Language, speed: AlgorithmSpeed): number[]
     {
-        if (this.languageSampleSizesBySpeed.has(language) && this.languageSampleSizesBySpeed.get(language)!.has(speed)) {
-            return this.languageSampleSizesBySpeed.get(language)!.get(speed)!;
+        if (this.languageSampleSizesBySpeed.has(language) && this.languageSampleSizesBySpeed.get(language)?.has(speed)) {
+            return this.languageSampleSizesBySpeed.get(language)?.get(speed);
         }
 
         if (this.languageDefaultSampleSizes.has(language)) {
-            return this.languageDefaultSampleSizes.get(language)!;
+            return this.languageDefaultSampleSizes.get(language);
         }
 
         return TestSetCreator.DEFAULT_SAMPLES;

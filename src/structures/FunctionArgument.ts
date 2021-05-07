@@ -1,2 +1,2 @@
-type FunctionArgument = Array<any> | string | number;
+type FunctionArgument = string[] | number[] | string | number;
 export {FunctionArgument};

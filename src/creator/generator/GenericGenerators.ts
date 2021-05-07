@@ -17,7 +17,7 @@ function generateNumberArray(n: number, range: number[] = []): number[] {
         return n;
     };
     if (range[0] !== undefined && range[1] !== undefined) {
-        generator = function (n: number) {
+        generator = function () {
             const max: number = range[1] - range[0];
             return Math.round(Math.random() * max) + range[0];
         };

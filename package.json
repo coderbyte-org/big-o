@@ -10,9 +10,10 @@
     "/dist"
   ],
   "scripts": {
-    "prepublish": "yarn build",
+    "prepublish": "yarn lint && yarn build",
     "build": "tsc",
-    "test": "mocha -r ts-node/register \"test/**/*.test.ts\""
+    "test": "mocha -r ts-node/register \"test/**/*.test.ts\"",
+    "lint": "eslint . --ext .ts"
   },
   "dependencies": {
     "tslib": "^2.2.0"

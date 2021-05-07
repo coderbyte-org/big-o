@@ -10,18 +10,18 @@ class GenericCalculator implements Calculator {
     calculate(runTimes: RunTime[], speed: AlgorithmSpeed): BigO {
         const nGroupedRunTimes = this.groupRunTimes(runTimes);
         switch (true) {
-        case this.likeFactorial(nGroupedRunTimes, speed):
-            return BigO.FACTORIAL;
-        case this.likeExponential(nGroupedRunTimes, speed):
-            return BigO.EXPONENTIAL;
-        case this.likePolynomial(nGroupedRunTimes, speed):
-            return BigO.POLYNOMIAL;
-        case this.likeQuadratic(nGroupedRunTimes, speed):
-            return BigO.QUADRATIC;
-        case this.likeLoglinear(nGroupedRunTimes, speed):
-            return BigO.LOGLINEAR;
-        default:
-            return BigO.UNKNOWN;
+            case this.likeFactorial(nGroupedRunTimes, speed):
+                return BigO.FACTORIAL;
+            case this.likeExponential(nGroupedRunTimes, speed):
+                return BigO.EXPONENTIAL;
+            case this.likePolynomial(nGroupedRunTimes, speed):
+                return BigO.POLYNOMIAL;
+            case this.likeQuadratic(nGroupedRunTimes, speed):
+                return BigO.QUADRATIC;
+            case this.likeLoglinear(nGroupedRunTimes, speed):
+                return BigO.LOGLINEAR;
+            default:
+                return BigO.UNKNOWN;
         }
     }
 
@@ -50,6 +50,7 @@ class GenericCalculator implements Calculator {
         return nGroupedRunTimes;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected likeLoglinear(nGroupedRunTimes: NGrouped, speed?: AlgorithmSpeed): boolean {
         return nGroupedRunTimes.hasOwnProperty(SampleSize.n1M)
             && nGroupedRunTimes[SampleSize.n1M] >= 1000
@@ -57,6 +58,7 @@ class GenericCalculator implements Calculator {
 
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected likeQuadratic(nGroupedRunTimes: NGrouped, speed?: AlgorithmSpeed): boolean {
         return nGroupedRunTimes.hasOwnProperty(SampleSize.n1K)
             && nGroupedRunTimes.hasOwnProperty(SampleSize.n2K)
@@ -66,6 +68,7 @@ class GenericCalculator implements Calculator {
         ;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected likePolynomial(nGroupedRunTimes: NGrouped, speed?: AlgorithmSpeed): boolean {
         return nGroupedRunTimes.hasOwnProperty(SampleSize.n128)
             && nGroupedRunTimes.hasOwnProperty(SampleSize.n256)
@@ -73,12 +76,14 @@ class GenericCalculator implements Calculator {
         ;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected likeExponential(nGroupedRunTimes: NGrouped, speed?: AlgorithmSpeed): boolean {
         return nGroupedRunTimes.hasOwnProperty(SampleSize.n32)
             && nGroupedRunTimes[SampleSize.n32] >= TIMEOUT_THRESHOLD_MS
         ;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected likeFactorial(nGroupedRunTimes: NGrouped, speed?: AlgorithmSpeed): boolean {
         return nGroupedRunTimes.hasOwnProperty(SampleSize.n16)
             && nGroupedRunTimes[SampleSize.n16] >= TIMEOUT_THRESHOLD_MS
