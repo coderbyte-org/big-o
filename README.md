@@ -121,8 +121,8 @@ More details on the meaning of [Code](src/structures/Code.ts) parameters can be 
 in [Extending Calculator Functionality](#extending-calculator-functionality) section.
 ### Insight
 This section describes how the transformation from [Code](src/structures/Code.ts) 
-to [BigO](src/structures/BigO.ts) is done in the calculator.
-[AnalysisService](src/AnalysisService.ts#L22) logic is following:
+to [BigO](src/structures/BigO.ts) is done in the calculator. 
+The logic for [AnalysisService](src/AnalysisService.ts#L22) is the following:
 ```
 (Code) -> [Creator] -> [Runner] -> [Calculator] -> (BigO)
                           ^              |
