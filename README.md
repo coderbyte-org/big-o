@@ -22,7 +22,6 @@ This powers the [BigO calculations done on Coderbyte](https://coderbyte.com/prof
   - [Argument generators](#argument-generators)
   - [Replacement patterns](#replacement-patterns)
   - [Code transformers](#custom-code-transformers)
-- [Case study](#case-study)
 
 ## Architecture
 This library consists of three essential parts linked together and run by [AnalysisService](src/AnalysisService.ts#L22):
@@ -373,6 +372,3 @@ calculator.addLanguageCodeTransformer(Language.PHP, code => {
   return '<?php\n' + code;
 });
 ```
-
-## Case study
-Creating a real world calculator [case study](examples/CASE_STUDY.md).
